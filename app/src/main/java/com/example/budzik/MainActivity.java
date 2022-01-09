@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -17,18 +18,23 @@ import java.time.ZonedDateTime;
 
 public class MainActivity extends AppCompatActivity {
 
+    DatePicker wybieraczDaty;
+    TimePicker wybieraczCzasu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        wybieraczDaty = findViewById(R.id.datePicker);
+        wybieraczCzasu = findViewById(R.id.timePicker);
+        wybieraczCzasu.setIs24HourView(true);
     }
 
     public void ustawBudzik(View v) {
-        TimePicker picker = (TimePicker) findViewById(R.id.timePicker);
-        picker.setIs24HourView(true);
         ZonedDateTime czas = ZonedDateTime.of(
-                LocalDate.now(),
-                LocalTime.of(picker.getHour(), picker.getMinute()),
+                LocalDate.of(wybieraczDaty.getYear(), wybieraczDaty.getMonth() + 1, wybieraczDaty.getDayOfMonth()),
+                LocalTime.of(wybieraczCzasu.getHour(), wybieraczCzasu.getMinute()),
                 ZoneId.systemDefault()
         );
 
